@@ -186,8 +186,7 @@ class Ahmia:
 
         return token_name, token_value
 
-    @staticmethod
-    def check_updates(status: Status):
+    def check_updates(self, status: Status):
         """
         Checks for program (pyahmia) updates.
 
@@ -200,7 +199,7 @@ class Ahmia:
             if isinstance(status, Status):
                 status.update("[dim]Checking for updates[/dim][yellow]…[/yellow]")
 
-            checker = UpdateChecker()
+            checker = UpdateChecker(bypass_cache=self.no_cache)
             check = checker.check(package_name=__pkg__, package_version=__version__)
 
             if check is not None:
