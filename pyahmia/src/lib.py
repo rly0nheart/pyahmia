@@ -1,23 +1,18 @@
 import csv
 import typing as t
-from contextlib import suppress
 from pathlib import Path
 
-from requests import RequestException
 from rich.console import Console, Group
 from rich.panel import Panel
 from rich.rule import Rule
-from rich.status import Status
-from update_checker import UpdateChecker
 
-from . import __pkg__, __version__
+from . import __version__
 
 console = Console(log_time=False)
 
 __all__ = [
     "print_banner",
     "print_results",
-    "check_updates",
     "export_csv",
     "console",
 ]
@@ -34,12 +29,28 @@ def print_banner(tor_mode: bool):
     )
 
 
-def print_results(search: dict):
+def print_results(search: dict, limit: int, show_all: bool = False):
+    """
+    Print search results to console.
+
+    :param search: Search response object from ahmia.search
+    :param limit: Maximum number of results to display
+    :param show_all: Override the limit parameter and display all results
+    """
+
     is_success = search["success"]
 
     if is_success:
-        results = search["results"]
-        console.log(f"[bold][#c7ff70]✔[/] {search['message']}[/bold]")
+        all_results: list = search["results"]
+        sliced_results: list = all_results[:limit]
+
+        results: list = all_results if show_all else sliced_results
+
+        if show_all:
+            console.log(f"[bold #c7ff70]✔[/bold #c7ff70] {search['message']}\n")
+        else:
+            console.log(f"[bold blue]*[/bold blue] Displaying {len(sliced_results)} of {len(all_results)} results.\n")
+
         for index, result in enumerate(results, start=1):
             title = result["title"]
             about = result["about"]
@@ -48,10 +59,12 @@ def print_results(search: dict):
 
             # ----------------------------------------------------------------------- #
             content_items = [
-                f"[bold][#c7ff70]{title}[/][/bold]",
-                Rule(style="#444444"),
+                # f"[bold][#c7ff70]{title}[/][/bold]",
+                # Rule(style="#444444"),
                 about,
-                f"[blue][link=http://{url}]{url}[/link][/blue] — [bold]{last_seen}[/]",
+                f"[blue][link=http://{url}]{url}[/link][/blue]",
+                Rule(style="#444444"),
+                f"[italic]last seen[/italic], {last_seen}"
             ]
             console.print(
                 Panel(
@@ -59,30 +72,12 @@ def print_results(search: dict):
                     highlight=True,
                     border_style="dim #c7ff70",
                     title_align="left",
-                    title=f"[{index}]",
+                    title=f"[italic]{title}[/italic]",
                 )
             )
             # ----------------------------------------------------------------------- #
     else:
-        console.log(f"[bold][yellow]✘[/yellow] {search['message']}[/bold]")
-
-
-def check_updates(status: Status):
-    """
-    Checks for program (pyahmia) updates.
-
-    :param status: A rich.status.Status object to show a live status message.
-    """
-    with suppress(RequestException):
-        if isinstance(status, Status):
-            status.update("[bold]Checking for updates[/bold][yellow]…[/yellow]")
-
-        checker = UpdateChecker()
-        check = checker.check(package_name=__pkg__, package_version=__version__)
-
-        if check is not None:
-            console.print(f"[bold][blue]🡅[/blue] {check}[/bold]")
-
+        console.log(f"[bold yellow]✘[/bold yellow] {search['message']}")
 
 def export_csv(results: t.Iterable[dict], path: str) -> str:
     """
