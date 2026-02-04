@@ -16,6 +16,8 @@ that match with a specified query, without an explicit requirement for Tor.
 - [x] Export results to CSV
 - [x] Enable/Disable routing requests through Tor
 - [x] Return results in a clean readable format
+- [x] Response caching for faster repeated searches
+- [x] Configurable result limits and request timeout
 
 ## Installation
 
@@ -80,6 +82,44 @@ all). You can change this by using the `-p, --period` option, and pass the time 
 ahmia QUERY --period week
 ```
 
+### Limiting Results
+
+By default, PyAhmia displays up to 100 results. You can change this with the `-l, --limit` option.
+
+*example*:
+
+```commandline
+ahmia QUERY --limit 50
+```
+
+To show all results regardless of the limit, use the `-a, --all` flag.
+
+*example*:
+
+```commandline
+ahmia QUERY --all
+```
+
+### Caching
+
+PyAhmia caches responses by default to reduce redundant requests. To disable caching, use the `--no-cache` flag.
+
+*example*:
+
+```commandline
+ahmia QUERY --no-cache
+```
+
+### Request Timeout
+
+You can set a custom timeout (in seconds) for requests using the `--timeout` option. The default is 10 seconds.
+
+*example*:
+
+```commandline
+ahmia QUERY --timeout 30
+```
+
 ## In Conclusion
 
 Don't send too many requests with pyahmia. Be nice to the owners of Ahmia.fi :)
@@ -100,7 +140,7 @@ are also appreciated, just open an issue.
 ## License
 
 This project is licensed under the MIT License, see
-the [LICENSE](https://github.com/rly0nheart/pyahmia/blob/master/LICENSE) file for details.
+the [LICENSE](https://codeberg.org/rly0nheart/pyahmia/raw/branch/master/LICENSE) file for details.
 
 
 > [!Note]
