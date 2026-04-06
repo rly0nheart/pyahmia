@@ -1,6 +1,6 @@
 [project]
 name = "pyahmia"
-version = "0.11.1"
+version = "0.11.2"
 description = "Search hidden services on the Tor network."
 license = "MIT"
 readme = "README.md"
@@ -31,7 +31,7 @@ pyahmia = "pyahmia.src.cli:cli"
 
 [project.optional-dependencies]
 dev = [
-    "black>=26.1.0",
+    "black>=26.3.1",
 ]
 
 [build-system]
