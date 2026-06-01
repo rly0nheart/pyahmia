@@ -51,31 +51,32 @@ def print_results(search: dict, limit: int, show_all: bool = False):
         else:
             console.log(f"[bold blue]*[/bold blue] Displaying {len(sliced_results)} of {len(all_results)} results.\n")
 
-        for index, result in enumerate(results, start=1):
-            title = result["title"]
-            about = result["about"]
-            url = result["url"]
-            last_seen = result["last_seen_rel"]
+        with console.pager(styles=True):
+            for index, result in enumerate(results, start=1):
+                title = result["title"]
+                about = result["about"]
+                url = result["url"]
+                last_seen = result["last_seen_rel"]
 
-            # ----------------------------------------------------------------------- #
-            content_items = [
-                # f"[bold][#c7ff70]{title}[/][/bold]",
-                # Rule(style="#444444"),
-                about,
-                f"[blue][link=http://{url}]{url}[/link][/blue]",
-                Rule(style="#444444"),
-                f"[italic]last seen[/italic], {last_seen}"
-            ]
-            console.print(
-                Panel(
-                    Group(*content_items),
-                    highlight=True,
-                    border_style="dim #c7ff70",
-                    title_align="left",
-                    title=f"[italic]{title}[/italic]",
+                # ----------------------------------------------------------------------- #
+                content_items = [
+                    # f"[bold][#c7ff70]{title}[/][/bold]",
+                    # Rule(style="#444444"),
+                    about,
+                    f"[blue][link=http://{url}]{url}[/link][/blue]",
+                    Rule(style="#444444"),
+                    f"[italic]last seen[/italic], {last_seen}"
+                ]
+                console.print(
+                    Panel(
+                        Group(*content_items),
+                        highlight=True,
+                        border_style="dim #c7ff70",
+                        title_align="left",
+                        title=f"[italic]{title}[/italic]",
+                    )
                 )
-            )
-            # ----------------------------------------------------------------------- #
+                # ----------------------------------------------------------------------- #
     else:
         console.log(f"[bold yellow]✘[/bold yellow] {search['message']}")
 

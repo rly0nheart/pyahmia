@@ -94,13 +94,13 @@ def cli():
                 query=args.query, time_period=args.period, status=status
             )
 
-            print_results(search=search, limit=args.limit, show_all=args.all)
+        print_results(search=search, limit=args.limit, show_all=args.all)
 
-            if args.export and (search.get("results") is not None):
-                outfile: str = export_csv(results=search.get("results"), path=args.query)
-                console.log(
-                    f"[bold #c7ff70]🖫[/bold #c7ff70] {search['total_count']} results exported: [link file://{outfile}]{outfile}"
-                )
+        if args.export and (search.get("results") is not None):
+            outfile: str = export_csv(results=search.get("results"), path=args.query)
+            console.log(
+                f"[bold #c7ff70]🖫[/bold #c7ff70] {search['total_count']} results exported: [link file://{outfile}]{outfile}"
+            )
 
 
     except KeyboardInterrupt:

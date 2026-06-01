@@ -240,7 +240,7 @@ wheels = [
 
 [[package]]
 name = "pyahmia"
-version = "0.11.1"
+version = "0.11.3"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -257,7 +257,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.13.4" },
-    { name = "black", marker = "extra == 'dev'", specifier = ">=26.1.0" },
+    { name = "black", marker = "extra == 'dev'", specifier = ">=26.3.1" },
     { name = "requests-tor", specifier = ">=1.4" },
     { name = "rich", specifier = ">=14.3.2" },
     { name = "update-checker", specifier = ">=0.18.0" },
