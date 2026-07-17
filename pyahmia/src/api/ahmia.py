@@ -14,7 +14,7 @@ from pyahmia.src.lib import console
 
 TIME_PERIODS = t.Literal["day", "week", "month", "all"]
 BASE_URL_CLEARNET = "https://ahmia.fi"
-BASE_URL_DARKNET = "https://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion"
+BASE_URL_DARKNET = "http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion"
 
 __all__ = ["Ahmia"]
 
@@ -31,7 +31,7 @@ class Ahmia:
 
         if self.use_tor:
             self.search_endpoint: str = (
-                f"{BASE_URL_DARKNET}/search"
+                f"{BASE_URL_DARKNET}/search/"
             )
             self.session = RequestsTor(tor_ports=(9050,), tor_cport=(9051,))
         else:
